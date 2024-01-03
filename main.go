@@ -55,12 +55,25 @@ func main() {
 	}
 
 	//delete a row in the database
+	deleteQuery := `delete from users where first_name = $1`
+	_, err = db.Exec(deleteQuery, "miles")
+	if err != nil {
+		log.Fatal("error", err)
+	}
 
 	//show the database content
 	err = getRows(db)
 	if err != nil {
 		log.Fatal("error", err)
 	}
+
+	//show a single row
+	var firstName, lastName string
+	var id int
+
+	singleRowQuery := `select id, first_name, last_name from users where id=$1`
+	err = db.QueryRow(singleRowQuery, 2).Scan(&id, &firstName, &lastName)
+	fmt.Printf("Single Row %d, %s %s \n", id, firstName, lastName)
 
 }
 
