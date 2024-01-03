@@ -23,23 +23,44 @@ func main() {
 	}
 
 	//show the database content
-
 	err = getRows(db)
 	if err != nil {
 		log.Fatal("error", err)
 	}
 
 	//insert a row to a database
+	insertQuery := `insert into users (first_name, last_name) values ($1, $2)`
+	_, err = db.Exec(insertQuery, "person", "random")
+	if err != nil {
+		log.Fatal("error", err)
+	}
 
 	//show the database content
+	err = getRows(db)
+	if err != nil {
+		log.Fatal("error", err)
+	}
 
 	//update a row in the database
+	updateQuery := `update users set first_name=$1, last_name= $2 where first_name = $3`
+	_, err = db.Exec(updateQuery, "person", "randomize", "person")
+	if err != nil {
+		log.Fatal("error", err)
+	}
 
 	//show the database content
+	err = getRows(db)
+	if err != nil {
+		log.Fatal("error", err)
+	}
 
 	//delete a row in the database
 
 	//show the database content
+	err = getRows(db)
+	if err != nil {
+		log.Fatal("error", err)
+	}
 
 }
 
